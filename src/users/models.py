@@ -1,10 +1,11 @@
 from django.contrib.auth.models import AbstractUser
+from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
 
 class User(AbstractUser):
     """Specific user-related data. Handles auth"""
-    middle_name = models.CharField(verbose_name="Middle name", max_length=256)
+    middle_name = models.CharField(verbose_name=_('Middle name'), max_length=256)
 
     def get_full_name(self) -> str:
         return self.first_name + ' ' + self.middle_name + ' ' + self.last_name
