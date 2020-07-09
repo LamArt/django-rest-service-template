@@ -38,7 +38,6 @@ echo local_settings.template.py > local_settings.py
 ## Использование
 
 ### Кодстайл: 
-
 [//]: # (Taken from https://github.com/f213/education-backend)
 
 ### Стиль
@@ -50,12 +49,9 @@ echo local_settings.template.py > local_settings.py
 
 * KISS и DRY.
 * Используйте [лучшие практики Джанго](http://django-best-practices.readthedocs.io/en/latest/index.html).
-* Делайте толстые модели. **Без логики во вью или шаблонах**. Только модели.
+* Делайте толстые модели. **Без логики во вью**. Только модели.
 * Используйте PEP-484 [тайп-хинты](https://www.python.org/dev/peps/pep-0484/) когда возможно.
-
-[//]: # (Пункты ниже под вопросом)
-
-* Prefer composition and [GenericRelations](https://docs.djangoproject.com/en/1.10/ref/contrib/contenttypes/) over inheritance.
-* Prefer [Manager](https://docs.djangoproject.com/en/1.10/topics/db/managers/) methods over static methods.
-* Do not use [signals](https://docs.djangoproject.com/en/1.10/topics/signals/) for business logic. Signals are good only for notification purposes.
-* No l10n is allowed in python code, use [django translation](https://docs.djangoproject.com/en/1.10/topics/i18n/translation/).
+* Используйте [GenericRelations](https://docs.djangoproject.com/en/1.10/ref/contrib/contenttypes/)
+* Используйте [Manager](https://docs.djangoproject.com/en/1.10/topics/db/managers/)
+* Не используйте [сигналы](https://docs.djangoproject.com/en/1.10/topics/signals/) для бизнес логики, используйте их для уведомлений.
+* Используйте [django translation](https://docs.djangoproject.com/en/1.10/topics/i18n/translation/).
