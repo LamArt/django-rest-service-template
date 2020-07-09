@@ -32,12 +32,12 @@ def login(request: Request) -> Response:
         return Response({"detail": _('both email and password are required')}, status=400)
     try:
         user = AuthenticationService.login_user(email, password)
-    except PermissionError as Argument:
-        return Response({"detail": Argument})
+    except PermissionError as e:
+        return Response({"detail": e})
     refresh = RefreshToken.for_user(user)
     serializer = UserSerializer(user)
     return Response({
-        'user': serializer.data.copy(),
+        'user': serializer.data,
         'refresh': str(refresh),
         'access': str(refresh.access_token)
     }, status=200)
@@ -55,6 +55,6 @@ def register(request: Request) -> Response:
         return Response({"detail": _('both email and password are required')}, status=400)
     try:
         AuthenticationService.register_new_user(email, password)
-    except ValueError as Argument:
-        return Response({"detail": Argument}, status=403)
+    except ValueError as e:
+        return Response({"detail": e}, status=403)
     return Response({"detail": "created"}, status=201)

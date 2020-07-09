@@ -9,12 +9,13 @@ class AuthenticationService:
     @staticmethod
     def register_new_user(email, password) -> None:
         """Creates a new user and links it to Profile"""
-        check_existing = get_user_model().objects.filter(username=email.lower())
-        if len(check_existing) != 0:
+        email = email.lower() # because Abc@Smth.ru is the same as abc@smth.ru
+        exists = get_user_model().objects.filter(username=email)
+        if len(exists) != 0:
             raise ValueError(_('user with this email already exists'))
-        user = get_user_model().objects.create_user(username=email.lower(),
+        user = get_user_model().objects.create_user(username=email,
                                                     password=password,
-                                                    email=email.lower())
+                                                    email=email)
         profile = Profile(user=user)
         profile.save()
 

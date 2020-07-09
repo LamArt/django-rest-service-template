@@ -21,5 +21,5 @@ from users import urls as users_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls')),
-    path('accounts/', include(users_urls)),
+    path('account/', include(users_urls)),
 ]
