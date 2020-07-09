@@ -39,8 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders'
     'rest_framework',
-    'users.apps.UsersConfig'
+    'users'
+]
+
+CORS_ALLOW_CREDENTIALS = True # to accept cookies via ajax request
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000' # the domain for front-end app(you can add more than 1)
 ]
 
 AUTH_USER_MODEL = 'users.User'
