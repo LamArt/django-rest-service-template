@@ -17,7 +17,6 @@ from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -28,7 +27,6 @@ SECRET_KEY = 'q)rgxa373$c$7%l-07^g!3o$%q5%#ns-#$plm@*c7_8o57x4rc'
 DEBUG = False
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -44,9 +42,9 @@ INSTALLED_APPS = [
     'users'
 ]
 
-CORS_ALLOW_CREDENTIALS = True # to accept cookies via ajax request
+CORS_ALLOW_CREDENTIALS = True  # to accept cookies via ajax request
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000' # the domain for front-end app(you can add more than 1)
+    'http://localhost:3000'  # the domain for front-end app(you can add more than 1)
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -82,11 +80,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',  # make all endpoints private
+    )
 }
 
 # Database
@@ -98,7 +94,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -118,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -131,7 +125,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
