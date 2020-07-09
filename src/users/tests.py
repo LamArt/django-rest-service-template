@@ -1,3 +1,1 @@
-from django.test import TestCase
-
-# Create your tests here.
+# TODO(toplenboren) Unit test the Auth service and Make API Tests
