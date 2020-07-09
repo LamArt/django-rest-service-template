@@ -16,4 +16,7 @@ class User(AbstractUser):
 
 class Profile(models.Model):
     """Business-logic specific information about users. Handle business logic"""
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return str(self.user)
