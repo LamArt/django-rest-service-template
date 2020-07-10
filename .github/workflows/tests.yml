@@ -27,4 +27,7 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
+        cp src/core/local_settings.template.py src/core/local_settings.py
+    - name: Run Tests
+      run: |
         python src/manage.py test
