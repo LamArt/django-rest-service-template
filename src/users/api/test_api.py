@@ -1,17 +1,13 @@
 from rest_framework.test import APITestCase
 from rest_framework.utils import json
 
-from users.models import Profile, User
+from users.models import User
 
 
 class APITests(APITestCase):
 
     def setUp(self) -> None:
         User.objects.create_user('test@test.ru', 'test@test.ru', '1234')
-        u: User = User.objects.get(username='test@test.ru')
-        u.first_name = 'Foxtrot'
-        u.second_name = 'Uniform'
-        u.last_name = 'Charlie Kilo'
 
     def test_register_login_with_correct_credentials(self) -> None:
         """register_user_creates_profile -> login to the system"""
