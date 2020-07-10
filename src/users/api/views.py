@@ -1,3 +1,5 @@
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils.translation import ugettext_lazy as _
 
@@ -33,7 +35,7 @@ def login(request: Request) -> Response:
     try:
         user = AuthenticationService.login_user(email, password)
     except PermissionError as e:
-        return Response({"detail": e})
+        return Response({"detail": e.args[0]}, status=403)
     refresh = RefreshToken.for_user(user)
     serializer = UserSerializer(user)
     return Response({
@@ -54,7 +56,11 @@ def register(request: Request) -> Response:
     except KeyError:
         return Response({"detail": _('both email and password are required')}, status=400)
     try:
+        validate_email(email)
+    except ValidationError:
+        return Response({"detail": _('bad email address')}, status=400)
+    try:
         AuthenticationService.register_new_user(email, password)
     except ValueError as e:
-        return Response({"detail": e}, status=403)
+        return Response({"detail": e.args[0]}, status=400)
     return Response({"detail": "created"}, status=201)
