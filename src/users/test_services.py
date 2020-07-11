@@ -12,8 +12,8 @@ class AuthenticationServiceTests(TestCase):
     def test_register_user_creates_profile(self) -> None:
         """register_user_creates_profile"""
         u = AuthenticationService.register_new_user('buddy@club.ru', '1234')
-        profileQS = Profile.objects.filter(user=u)
-        self.assertEqual(len(profileQS), 1)
+        profile_QS = Profile.objects.filter(user=u)
+        self.assertEqual(len(profile_QS), 1)
 
     def test_register_user_validators(self) -> None:
         """Can't register existing"""
@@ -33,3 +33,17 @@ class AuthenticationServiceTests(TestCase):
         """Not correct pass | Not correct email"""
         self.assertRaises(PermissionError, lambda:  AuthenticationService.login_user('Tost@test.ru', '1234'))
         self.assertRaises(PermissionError, lambda:  AuthenticationService.login_user('Test@test.ru', '12345'))
+
+    def test_password_change_with_correct_credentials(self) -> None:
+        """Change password, try to login with new creds"""
+        source_u = User.objects.get(username='test@test.ru')
+        AuthenticationService.change_password(source_u, '1234', '12345')
+        u = AuthenticationService.login_user('test@test.ru', '12345')
+        self.assertEqual(u, source_u)
+
+    def test_password_change_with_incorrect_credentials(self) -> None:
+        """Change password with bad creds, try to login with bad creds"""
+        source_u = User.objects.get(username='test@test.ru')
+        self.assertRaises(PermissionError, lambda: AuthenticationService.change_password(source_u, '123', '12345'))
+        AuthenticationService.change_password(source_u, '1234', '12345')
+        self.assertRaises(PermissionError, lambda: AuthenticationService.login_user('test@test.ru', '1234'))
