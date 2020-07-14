@@ -4,7 +4,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    """Specific user-related data. Handles auth"""
+    """Specific user-related data. Handles auth and non-business logic here"""
     middle_name = models.CharField(verbose_name=_('Middle name'), max_length=256)
 
     def get_full_name(self) -> str:
@@ -15,7 +15,7 @@ class User(AbstractUser):
 
 
 class Profile(models.Model):
-    """Business-logic specific information about users. Handle business logic"""
+    """Business-logic specific information about users. Handle business logic here"""
     user = models.OneToOneField(to=User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
