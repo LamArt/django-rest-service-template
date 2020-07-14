@@ -31,7 +31,7 @@ def login(request: Request) -> Response:
         password = request.data['password']
         email = request.data["email"]
     except KeyError:
-        return Response({"detail": _('both email and password are required')}, status=400)
+        return Response({"detail": _('Both email and password are required')}, status=400)
     try:
         user = AuthenticationService.login_user(email, password)
     except PermissionError as e:
@@ -54,13 +54,37 @@ def register(request: Request) -> Response:
         email = request.data["email"]
         password = request.data['password']
     except KeyError:
-        return Response({"detail": _('both email and password are required')}, status=400)
+        return Response({"detail": _('Both email and password are required')}, status=400)
     try:
         validate_email(email)
     except ValidationError:
-        return Response({"detail": _('bad email address')}, status=400)
+        return Response({"detail": _('Bad email address')}, status=400)
     try:
         AuthenticationService.register_new_user(email, password)
     except ValueError as e:
         return Response({"detail": e.args[0]}, status=400)
     return Response({"detail": "created"}, status=201)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+@ensure_csrf_cookie
+def change_password(request: Request) -> Response:
+    """Changes a password if user exists and old password is ok"""
+    try:
+        email = request.data["email"]
+        old_password = request.data['old_password']
+        new_password = request.data['new_password']
+    except KeyError:
+        return Response({"detail": _('Email, new_password and old_password, are required')}, status=400)
+    if old_password == new_password:
+        return Response({"detail": _("""New password can't be the same as the old one""")}, status=400)
+    try:
+        validate_email(email)
+    except ValidationError:
+        return Response({"detail": _('Bad email address')}, status=400)
+    try:
+        AuthenticationService.change_password(email, old_password, new_password)
+    except PermissionError as e:
+        return Response({"detail": e.args[0]}, status=400)
+    return Response({"detail": "changed"}, status=200)

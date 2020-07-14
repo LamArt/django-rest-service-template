@@ -36,14 +36,12 @@ class AuthenticationServiceTests(TestCase):
 
     def test_password_change_with_correct_credentials(self) -> None:
         """Change password, try to login with new creds"""
-        source_u = User.objects.get(username='test@test.ru')
-        AuthenticationService.change_password(source_u, '1234', '12345')
+        AuthenticationService.change_password('test@test.ru', '1234', '12345')
         u = AuthenticationService.login_user('test@test.ru', '12345')
-        self.assertEqual(u, source_u)
+        self.assertEqual(u.username, 'test@test.ru')
 
     def test_password_change_with_incorrect_credentials(self) -> None:
         """Change password with bad creds, try to login with bad creds"""
-        source_u = User.objects.get(username='test@test.ru')
-        self.assertRaises(PermissionError, lambda: AuthenticationService.change_password(source_u, '123', '12345'))
-        AuthenticationService.change_password(source_u, '1234', '12345')
+        self.assertRaises(PermissionError, lambda: AuthenticationService.change_password('test@test.ru', '123', '12345'))
+        AuthenticationService.change_password('test@test.ru', '1234', '12345')
         self.assertRaises(PermissionError, lambda: AuthenticationService.login_user('test@test.ru', '1234'))

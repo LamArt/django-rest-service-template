@@ -33,8 +33,13 @@ class AuthenticationService:
         return user
 
     @staticmethod
-    def change_password(user: User, old_password: str, new_password: str) -> User:
-        """If old password is ok, change password to the new password, returns user or raises exception"""
+    def change_password(email: str, old_password: str, new_password: str) -> User:
+        """If user exists then if old password is ok, change password to the new password,
+         returns user or raises exception"""
+        try:
+            user = get_user_model().objects.get(username=email.lower())
+        except ObjectDoesNotExist:
+            raise PermissionError(_('bad email'))
         if not user.check_password(old_password):
             raise PermissionError(_('bad password'))
         user.set_password(new_password)

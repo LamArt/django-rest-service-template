@@ -7,6 +7,7 @@ app_name = 'users'
 urlpatterns = [
     path('login/', views.login, name='login'),
     path('register/', views.register, name='register'),
+    path('change-password/', views.change_password, name='change-password'),
     path('refresh/', TokenRefreshView.as_view(), name='token-refresh'),
     path('', views.get_self_profile, name='profile'),
 ]
