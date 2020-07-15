@@ -1,67 +1,68 @@
-# Темплейт для разработки бэкендов на DRF
+# Django REST framework service backend template
 
-**Мотивация**
+**Why?**
 
-В стандартной джанге много батареек, но даже с ними приходится с нуля писать такие общие для веб-приложений вещи как:
-* Аутентификация
-* Подтверждение пароля
-* Подключение CORS / JWT
+Standard Django comes with a lot of batteries, but even with them it's up to you to implement such basic features like:
+* Auth workflow, Login/Registration
+* Custom user model
+* CORS + JWT
 
-Задача темплейта — дать общие функциональности из коробки.
+This features implemented in this template:
 
-В темплейте есть:
-- Модель кастомного пользователя
-- Аутентификация по JWT
-- Локальные настройки
+Features:
+- Custom user model
+- JWT auth via `simple-JWT`
+- Local settings
 - CORS
-- Вью для регистрации и логина
+- Login and registration views
 
 ---
-В планах:
-- Вью для замены пароля
-- Вью для восстановления пароля
-- Настройка отправки почты пользователям
-- Докер
-- CI-CD скрипты
-- Документация к API / Сваггер
-- Сентри (?)
+Planned:
+- Change password view
+- Reset password view
+- User notification mechanism
+- Docker
+- CI-CD
+- Swagger (?)
+- Sentry (?)
 
-## Пре-реквезиты:
+## Pre-requisites:
 
-**Основное**
+**Required**
 - [Django](https://www.djangoproject.com/)
 - [Django REST Framework](https://www.django-rest-framework.org/)
 
-**Дополнительно**
+**Optional**
 - [JWT](https://jwt.io/)
 - [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 
-## Установка
+## Installation
 
 
 ``` (bash)
 pip install -r requirements.txt
 cd ./src/core
 echo local_settings.template.py > local_settings.py
+python src/manage.py test
 ```
 
-## Использование
+## Usage
 
-### Кодстайл: 
+### Codestyle: 
 [//]: # (Taken from https://github.com/f213/education-backend)
 
-### Стиль
+### Style
 
-* [Кодстайл Джанго](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/#model-style).
-* Докстринги к моделям и методам.
+* [Django codestyle](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/#model-style).
+* Use docstrings.
 
 ### Организация кода
 
-* KISS и DRY.
-* Используйте [лучшие практики Джанго](http://django-best-practices.readthedocs.io/en/latest/index.html).
-* Делайте толстые модели. **Без логики во вью**. Только модели.
-* Используйте PEP-484 [тайп-хинты](https://www.python.org/dev/peps/pep-0484/) когда возможно.
-* Используйте [GenericRelations](https://docs.djangoproject.com/en/1.10/ref/contrib/contenttypes/)
-* Используйте [Manager](https://docs.djangoproject.com/en/1.10/topics/db/managers/)
-* Не используйте [сигналы](https://docs.djangoproject.com/en/1.10/topics/signals/) для бизнес логики, используйте их для уведомлений.
-* Используйте [django translation](https://docs.djangoproject.com/en/1.10/topics/i18n/translation/).
+* KISS + DRY.
+* Use [Django best practices](http://django-best-practices.readthedocs.io/en/latest/index.html).
+* Make fat models. **Don't write business-logic in views**. 
+* Use PEP-484 [type-hints](https://www.python.org/dev/peps/pep-0484/) when possible.
+* Use [GenericRelations](https://docs.djangoproject.com/en/1.10/ref/contrib/contenttypes/)
+* Use [Manager](https://docs.djangoproject.com/en/1.10/topics/db/managers/)
+* Don't use [signals](https://docs.djangoproject.com/en/1.10/topics/signals/) for business logic.
+* Use [django translation](https://docs.djangoproject.com/en/1.10/topics/i18n/translation/).
