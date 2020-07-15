@@ -56,7 +56,7 @@ python src/manage.py test
 * [Django codestyle](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/#model-style).
 * Use docstrings.
 
-### Организация кода
+### Code organisation
 
 * KISS + DRY.
 * Use [Django best practices](http://django-best-practices.readthedocs.io/en/latest/index.html).
@@ -66,3 +66,4 @@ python src/manage.py test
 * Use [Manager](https://docs.djangoproject.com/en/1.10/topics/db/managers/)
 * Don't use [signals](https://docs.djangoproject.com/en/1.10/topics/signals/) for business logic.
 * Use [django translation](https://docs.djangoproject.com/en/1.10/topics/i18n/translation/).
+* Put business logic in `service.py` files
