@@ -15,10 +15,10 @@ Features:
 - Local settings
 - CORS
 - Login and registration views
+- Change password view
 
 ---
 Planned:
-- Change password view
 - Reset password view
 - User notification mechanism
 - Docker
