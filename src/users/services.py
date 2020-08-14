@@ -8,7 +8,7 @@ from users.models import User, Profile
 
 class AuthenticationService:
     @staticmethod
-    def register_new_user(email, password) -> User:
+    def register_new_user(email: str, password: str) -> User:
         """Creates a new user and links it to Profile"""
         email = email.lower() # because Abc@Smth.ru is the same as abc@smth.ru
         exists = get_user_model().objects.filter(username=email)
@@ -22,12 +22,26 @@ class AuthenticationService:
         return user
 
     @staticmethod
-    def login_user(email, password) -> User:
-        """Checks the cred pair is OK"""
+    def login_user(email: str, password: str) -> User:
+        """Checks the cred pair is OK, returns user if ok"""
         try:
             user = get_user_model().objects.get(username=email.lower())
         except ObjectDoesNotExist:
             raise PermissionError(_('bad email'))
         if not user.check_password(password):
             raise PermissionError(_('bad password'))
+        return user
+
+    @staticmethod
+    def change_password(email: str, old_password: str, new_password: str) -> User:
+        """If user exists then if old password is ok, change password to the new password,
+         returns user or raises exception"""
+        try:
+            user = get_user_model().objects.get(username=email.lower())
+        except ObjectDoesNotExist:
+            raise PermissionError(_('bad email'))
+        if not user.check_password(old_password):
+            raise PermissionError(_('bad password'))
+        user.set_password(new_password)
+        user.save()
         return user
